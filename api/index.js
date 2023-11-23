@@ -11,7 +11,6 @@ dotenv.config();
 // }).catch((err) => {
 //      console.log(err)
 // })
-
 connectdb();
 
 const app = express();
