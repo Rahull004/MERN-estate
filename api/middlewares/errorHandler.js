@@ -6,6 +6,7 @@ const errorHandler = (err, req, res, next) => {
         case constants.VALIDATION_ERROR:
             res.json({
                 title: "Validation error",
+                success: false,
                 message: err.message,
                 stackTree: err.stack
             });
@@ -13,6 +14,7 @@ const errorHandler = (err, req, res, next) => {
         case constants.NOT_FOUND:
             res.json({
                 title: "Not found",
+                success: false,
                 message: err.message,
                 stackTree: err.stack
             });
@@ -20,6 +22,7 @@ const errorHandler = (err, req, res, next) => {
         case constants.UNAUTHORIZED:
             res.json({
                 title: "Unauthorized",
+                success: false,
                 message: err.message,
                 stackTree: err.stack
             });
@@ -27,6 +30,7 @@ const errorHandler = (err, req, res, next) => {
         case constants.FORBIDDEN:
             res.json({
                 title: "Forbidden",
+                success: false,
                 message: err.message,
                 stackTree: err.stack
             });
@@ -34,6 +38,7 @@ const errorHandler = (err, req, res, next) => {
         case constants.SERVER_ERROR:
             res.json({
                 title: "Server_error",
+                success: false,
                 message: err.message,
                 stackTree: err.stack
             });
