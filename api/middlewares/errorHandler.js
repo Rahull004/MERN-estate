@@ -4,7 +4,7 @@ const errorHandler = (err, req, res, next) => {
     const statusCode = err.statusCode ? err.statusCode : 500;
     switch (statusCode) {
         case constants.VALIDATION_ERROR:
-            res.json({
+            res.status(statusCode).json({
                 title: "Validation error",
                 success: false,
                 message: err.message,
@@ -12,7 +12,7 @@ const errorHandler = (err, req, res, next) => {
             });
             break;
         case constants.NOT_FOUND:
-            res.json({
+            res.status(statusCode).json({
                 title: "Not found",
                 success: false,
                 message: err.message,
@@ -20,7 +20,7 @@ const errorHandler = (err, req, res, next) => {
             });
             break;
         case constants.UNAUTHORIZED:
-            res.json({
+            res.status(statusCode).json({
                 title: "Unauthorized",
                 success: false,
                 message: err.message,
@@ -28,7 +28,7 @@ const errorHandler = (err, req, res, next) => {
             });
             break;
         case constants.FORBIDDEN:
-            res.json({
+            res.status(statusCode).json({
                 title: "Forbidden",
                 success: false,
                 message: err.message,
@@ -36,7 +36,7 @@ const errorHandler = (err, req, res, next) => {
             });
             break;
         case constants.SERVER_ERROR:
-            res.json({
+            res.status(statusCode).json({
                 title: "Server_error",
                 success: false,
                 message: err.message,
