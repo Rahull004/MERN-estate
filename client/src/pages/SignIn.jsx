@@ -18,10 +18,11 @@ function SignIn() {
   // const [error, setError] = useState(null);
   // const [loading, setloading] = useState(false);
 
-  // const { loading, error } = useSelector((state) => state.user);      // both are same
-  const { loading, error } = useSelector((state) => {
-    return state.user;
-  });
+  const { loading, error } = useSelector((state) => state.user);     
+                      // both are same
+  // const { loading, error } = useSelector((state) => {
+  //   return state.user;
+  // });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
