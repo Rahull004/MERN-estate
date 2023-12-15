@@ -14,11 +14,13 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutFailure,
+  signOutStart,
+  signOutSuccess,
 } from "../redux/userReducers/userSlice.js";
 import { useDispatch } from "react-redux";
 
 export default function Profile() {
-
   const { currentUser, loading, error } = useSelector((state) => state.user);
   const fileRef = useRef(null);
   const [file, setFile] = useState(undefined);
@@ -88,41 +90,59 @@ export default function Profile() {
         },
         body: JSON.stringify(formData),
       });
-      
+
       const data = await res.json();
       if (data.success == false) {
         dispatch(updateUserFailure(data.message));
         return;
       }
-      
+
       dispatch(updateUserSuccess(data));
       setUpdateSuccessful(true);
-
     } catch (error) {
       dispatch(updateUserFailure(error.message));
     }
   };
 
-const handleDeleteUser = async () => {
-  try {
-    dispatch(deleteUserStart())
+  const handleDeleteUser = async () => {
+    try {
+      dispatch(deleteUserStart());
 
-    const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-      method: 'DELETE',
-    })
-    const data = await res.json();
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
 
-    if(data.success == false){
-      dispatch(deleteUserFailure(data));
-      return;
+      if (data.success == false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+
+      dispatch(deleteUserSuccess(data));
+
+    } catch (error) {
+      dispatch(deleteUserFailure(error.message));
     }
+  };
 
-    dispatch(deleteUserSuccess(data));
-    
-  } catch (error) {
-    dispatch(deleteUserFailure(error.message));
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutStart());
+
+      const res = await fetch('/api/auth/signout');
+      const data = await res.json();
+  
+      if(data.success == false){
+        dispatch(signOutFailure(data.message));
+        return ;
+      }
+
+      dispatch(signOutSuccess(data));
+
+    } catch (error) {
+      dispatch(signOutFailure(error.message));
+    }
   }
-}
 
   return (
     <div className=" p-3 mx-auto max-w-lg">
@@ -182,13 +202,22 @@ const handleDeleteUser = async () => {
           onChange={handleChange}
           autoComplete="false"
         />
-        <button disabled={loading} className=" bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95">
+        <button
+          disabled={loading}
+          className=" bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95"
+        >
           {loading ? "Loading..." : "Update"}
         </button>
       </form>
       <div className=" flex justify-between mt-5">
-        <span onClick={handleDeleteUser} className=" text-red-700 cursor-pointer">Delete Account</span>
-        <span className=" text-red-700 cursor-pointer">Sign Out</span>
+        <span
+          onClick={handleDeleteUser}
+          className=" text-red-700 cursor-pointer">
+          Delete Account
+        </span>
+        <span 
+          onClick={handleSignOut}
+          className=" text-red-700 cursor-pointer">Sign Out</span>
       </div>
       <p className=" text-red-700 mt-5">
         {error ? error : " "}
