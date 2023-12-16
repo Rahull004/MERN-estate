@@ -19,6 +19,7 @@ import {
   signOutSuccess,
 } from "../redux/userReducers/userSlice.js";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
   const { currentUser, loading, error } = useSelector((state) => state.user);
@@ -119,7 +120,6 @@ export default function Profile() {
       }
 
       dispatch(deleteUserSuccess(data));
-
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -129,20 +129,19 @@ export default function Profile() {
     try {
       dispatch(signOutStart());
 
-      const res = await fetch('/api/auth/signout');
+      const res = await fetch("/api/auth/signout");
       const data = await res.json();
-  
-      if(data.success == false){
+
+      if (data.success == false) {
         dispatch(signOutFailure(data.message));
-        return ;
+        return;
       }
 
       dispatch(signOutSuccess(data));
-
     } catch (error) {
       dispatch(signOutFailure(error.message));
     }
-  }
+  };
 
   return (
     <div className=" p-3 mx-auto max-w-lg">
@@ -208,20 +207,25 @@ export default function Profile() {
         >
           {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          className=" text-white bg-green-700 p-3 rounded-lg text-center uppercase hover:opacity-95"
+          to={"/create-listing"}
+        >
+          Create Listing
+        </Link>
       </form>
       <div className=" flex justify-between mt-5">
         <span
           onClick={handleDeleteUser}
-          className=" text-red-700 cursor-pointer">
+          className=" text-red-700 cursor-pointer"
+        >
           Delete Account
         </span>
-        <span 
-          onClick={handleSignOut}
-          className=" text-red-700 cursor-pointer">Sign Out</span>
+        <span onClick={handleSignOut} className=" text-red-700 cursor-pointer">
+          Sign Out
+        </span>
       </div>
-      <p className=" text-red-700 mt-5">
-        {error ? error : " "}
-      </p>
+      <p className=" text-red-700 mt-5">{error ? error : " "}</p>
       <p className=" text-green-700 mt-5">
         {updateSuccessful ? "User is updated successfully!" : " "}
       </p>
