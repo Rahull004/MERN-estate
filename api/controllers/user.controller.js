@@ -1,6 +1,7 @@
 import { errorhandler } from "../utils/error.js";
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
+import Listing from "../models/listing.model.js";
 
 export const test = (req, res) => {
     res.send("Api route is working");
@@ -41,8 +42,26 @@ export const deleteUser = async (req, res, next) => {
         await User.findOneAndDelete(req.params.id);
         res.clearCookie('access_token');
         res.status(200).json('User has been delete!')
-        
+
     } catch (error) {
         next(error);
     }
 };
+
+export const getUserListings = async (req, res, next) => {
+
+    if (req.user.id === req.params.id) {
+
+        try {
+
+            const listings = await Listing.find({ userRef: req.params.id });
+            res.status(200).json(listings);
+
+        } catch (error) {
+            next(error);
+        }
+    }
+    else {
+        next(errorhandler(401, "You can only view your own listings!"));
+    }
+}
