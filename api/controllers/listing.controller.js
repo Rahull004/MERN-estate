@@ -43,12 +43,12 @@ export const updateListing = async (req, res, next) => {
             return next(errorhandler(401, "You can only update your own listings!"));
         }
 
-        await Listing.findByIdAndUpdate(
+        const updatedList = await Listing.findByIdAndUpdate(
             req.params.id,
             req.body,
             { new: true }
         );
-        return res.status(200).json("Listing updated!");
+        return res.status(200).json(updatedList);
 
     } catch (error) {
         next(error);
