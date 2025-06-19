@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import ListingCard from "../components/ListingCard";
-import SignInPopUp from "../components/SignInPopUp.jsx";
+import SignInPopUp from "../components/PopUp.jsx";
 
 function Home() {
   const [offerListings, setOfferListings] = useState([]);
