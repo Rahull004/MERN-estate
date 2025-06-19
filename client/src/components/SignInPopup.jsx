@@ -1,9 +1,8 @@
-// SignInPopup.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 import { IoClose } from "react-icons/io5";
 
-function SignInPopup({ isOpen, onClose }) {
+function SignInPopUp({ isOpen, onClose }) {
   if (!isOpen) return null;
 
   return (
@@ -77,4 +76,4 @@ function SignInPopup({ isOpen, onClose }) {
   );
 }
 
-export default SignInPopup;
+export default SignInPopUp;

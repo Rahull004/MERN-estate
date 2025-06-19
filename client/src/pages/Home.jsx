@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import "swiper/css/bundle";
 import ListingCard from "../components/ListingCard";
-import SignInPopup from "../components/SignInPopUp"
+import SignInPopUp from "../components/SignInPopUp.jsx";
 
 function Home() {
   const [offerListings, setOfferListings] = useState([]);
@@ -77,7 +77,7 @@ function Home() {
   return (
     <div>
       {/* Sign In Popup */}
-      <SignInPopup isOpen={showSignInPopup} onClose={handleClosePopup} />
+      <SignInPopUp isOpen={showSignInPopup} onClose={handleClosePopup} />
       
       {/* top */}
       <div className="flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto">
